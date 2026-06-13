@@ -12,270 +12,271 @@ const questions = [
     question_id: 'q001',
     scene_id: 'dining room',
     instruction: 'Translate the entire round dining table with its chairs little bit closer to the sideboard cabinet.',
+    instruction_zh: '将整个圆形餐桌及其周围的椅子稍微移动得更靠近餐边柜。',
     original: 'https://vhdyfdmtiglimbtuvtvg.supabase.co/storage/v1/object/public/scenes/dining_room_origin.glb',
     method_a: 'ours',
     method_b: 'e2a',
     result_a: 'https://vhdyfdmtiglimbtuvtvg.supabase.co/storage/v1/object/public/scenes/sceneharness_dining_room_translate.glb',
     result_b: 'https://vhdyfdmtiglimbtuvtvg.supabase.co/storage/v1/object/public/scenes/E2A_dining_room_translate.glb',
   },
-
   {
     question_id: 'q002',
     scene_id: 'bedroom',
-    instruction: 'Rotate the armchair little bit closer to the bed, so that it faces toward the window."',
+    instruction: 'Rotate the armchair little bit closer to the bed, so that it faces toward the window.',
+    instruction_zh: '将扶手椅稍微旋转，使其更靠近床，并朝向窗户。',
     original: 'https://vhdyfdmtiglimbtuvtvg.supabase.co/storage/v1/object/public/scenes/bedroom_origin.glb',
     method_a: 'ours',
     method_b: 'e2a',
     result_a: 'https://vhdyfdmtiglimbtuvtvg.supabase.co/storage/v1/object/public/scenes/sceneharness_bedroom_rotate.glb',
     result_b: 'https://vhdyfdmtiglimbtuvtvg.supabase.co/storage/v1/object/public/scenes/E2A_bedroom_rotate.glb',
   },
-
   {
     question_id: 'q003',
     scene_id: 'office',
     instruction: 'Translate the conference table closer to the wall with the two windows.',
+    instruction_zh: '将会议桌移动得更靠近有两扇窗户的墙。',
     original: 'https://vhdyfdmtiglimbtuvtvg.supabase.co/storage/v1/object/public/scenes/office_origin.glb',
     method_a: 'ours',
     method_b: 'e2a',
     result_a: 'https://vhdyfdmtiglimbtuvtvg.supabase.co/storage/v1/object/public/scenes/sceneharness_office_translate.glb',
     result_b: 'https://vhdyfdmtiglimbtuvtvg.supabase.co/storage/v1/object/public/scenes/E2A_office_translate.glb',
   },
-
   {
     question_id: 'q004',
     scene_id: 'kids room',
     instruction: 'Rotate the house frame bed 90 degrees clockwise so the headboard is against the light blue wall.',
+    instruction_zh: '将房屋造型床顺时针旋转 90 度，使床头靠在浅蓝色墙面上。',
     original: 'https://vhdyfdmtiglimbtuvtvg.supabase.co/storage/v1/object/public/scenes/kids_room_origin.glb',
     method_a: 'ours',
     method_b: 'e2a',
     result_a: 'https://vhdyfdmtiglimbtuvtvg.supabase.co/storage/v1/object/public/scenes/sceneharness_kids_room_rotate.glb',
     result_b: 'https://vhdyfdmtiglimbtuvtvg.supabase.co/storage/v1/object/public/scenes/E2A_kids_room_rotate.glb',
   },
-
   {
     question_id: 'q005',
     scene_id: 'living room',
     instruction: 'Translate the sectional sofa a little bit closer to the wall bookcases.',
+    instruction_zh: '将组合沙发稍微移动得更靠近墙边书柜。',
     original: 'https://vhdyfdmtiglimbtuvtvg.supabase.co/storage/v1/object/public/scenes/living_room_origin.glb',
     method_a: 'ours',
     method_b: 'e2a',
     result_a: 'https://vhdyfdmtiglimbtuvtvg.supabase.co/storage/v1/object/public/scenes/sceneharness_living_room_translate.glb',
     result_b: 'https://vhdyfdmtiglimbtuvtvg.supabase.co/storage/v1/object/public/scenes/E2A_living_room_translate.glb',
   },
-
   {
     question_id: 'q006',
     scene_id: 'bedroom',
-    instruction: 'Translate the two woven armchairs and the ottoman little bitcloser to the foot of the bed.',
+    instruction: 'Translate the two woven armchairs and the ottoman little bit closer to the foot of the bed.',
+    instruction_zh: '将两个编织扶手椅和脚凳稍微移动得更靠近床尾。',
     original: 'https://vhdyfdmtiglimbtuvtvg.supabase.co/storage/v1/object/public/scenes/bedroom_origin.glb',
     method_a: 'ours',
     method_b: 'vulcan',
-    result_a: '',
+    result_a: 'https://vhdyfdmtiglimbtuvtvg.supabase.co/storage/v1/object/public/scenes/sceneharness_bedroom_translate.glb',
     result_b: 'https://vhdyfdmtiglimbtuvtvg.supabase.co/storage/v1/object/public/scenes/vulcan_bedroom_translate.glb',
   },
-
   {
     question_id: 'q007',
     scene_id: 'bathroom',
     instruction: 'Scale the round illuminated wall mirror to 1.5 times its current size.',
+    instruction_zh: '将圆形发光壁镜放大到当前尺寸的 1.5 倍。',
     original: 'https://vhdyfdmtiglimbtuvtvg.supabase.co/storage/v1/object/public/scenes/bathroom_origin.glb',
     method_a: 'ours',
     method_b: 'vulcan',
     result_a: 'https://vhdyfdmtiglimbtuvtvg.supabase.co/storage/v1/object/public/scenes/sceneharness_bathroom_scale.glb',
     result_b: 'https://vhdyfdmtiglimbtuvtvg.supabase.co/storage/v1/object/public/scenes/vulcan_bathroom_scale.glb',
   },
-
   {
     question_id: 'q008',
     scene_id: 'game_room',
     instruction: 'Scale the wall tv above the media console slightly bigger.',
+    instruction_zh: '将媒体柜上方的壁挂电视稍微放大。',
     original: 'https://vhdyfdmtiglimbtuvtvg.supabase.co/storage/v1/object/public/scenes/gameroom_origin.glb',
     method_a: 'ours',
     method_b: 'vulcan',
     result_a: 'https://vhdyfdmtiglimbtuvtvg.supabase.co/storage/v1/object/public/scenes/sceneharness_gameroom_scale.glb',
     result_b: 'https://vhdyfdmtiglimbtuvtvg.supabase.co/storage/v1/object/public/scenes/vulcan_game_room_scale.glb',
   },
-
   {
     question_id: 'q009',
     scene_id: 'bathroom',
     instruction: 'Translate the round black bath mat 0.5 meters towards the shower glass partition.',
+    instruction_zh: '将黑色圆形浴室地垫朝淋浴玻璃隔断方向移动 0.5 米。',
     original: 'https://vhdyfdmtiglimbtuvtvg.supabase.co/storage/v1/object/public/scenes/bathroom_origin.glb',
     method_a: 'ours',
     method_b: 'vulcan',
     result_a: 'https://vhdyfdmtiglimbtuvtvg.supabase.co/storage/v1/object/public/scenes/sceneharness_bathroom_translate.glb',
     result_b: 'https://vhdyfdmtiglimbtuvtvg.supabase.co/storage/v1/object/public/scenes/vulcan_bathroom_translate.glb',
   },
-
   {
     question_id: 'q010',
     scene_id: 'bathroom',
     instruction: 'Remove the tall wooden slatted storage cabinet next to the vanity.',
+    instruction_zh: '移除洗手台旁边的高木质栅格储物柜。',
     original: 'https://vhdyfdmtiglimbtuvtvg.supabase.co/storage/v1/object/public/scenes/bathroom_origin.glb',
     method_a: 'ours',
     method_b: 'vulcan',
     result_a: 'https://vhdyfdmtiglimbtuvtvg.supabase.co/storage/v1/object/public/scenes/sceneharness_bathroom_remove.glb',
     result_b: 'https://vhdyfdmtiglimbtuvtvg.supabase.co/storage/v1/object/public/scenes/vulcan_bathroom_remove.glb',
   },
-
   {
     question_id: 'q011',
     scene_id: '199',
     instruction: 'Place two mannequins in the waiting room, lay a carpet in the corridor, enlarge the paintings in the room, and rotate the X-ray machine clockwise.',
+    instruction_zh: '在候诊室放置两个假人，在走廊铺设一块地毯，放大房间中的画作，并将 X 光机顺时针旋转。',
     original: 'https://vhdyfdmtiglimbtuvtvg.supabase.co/storage/v1/object/public/scenes/199_origin.glb',
     method_a: 'ours',
     method_b: 'blender_mcp',
     result_a: 'https://vhdyfdmtiglimbtuvtvg.supabase.co/storage/v1/object/public/scenes/sceneharness_199_mixed.glb',
     result_b: 'https://vhdyfdmtiglimbtuvtvg.supabase.co/storage/v1/object/public/scenes/BlenderMCP_199_mixed.glb',
   },
-
   {
     question_id: 'q012',
     scene_id: '099',
     instruction: 'Move the plants from the living room to the bedroom nightstand.',
+    instruction_zh: '将植物从客厅移动到卧室的床头柜上。',
     original: 'https://vhdyfdmtiglimbtuvtvg.supabase.co/storage/v1/object/public/scenes/099_origin.glb',
     method_a: 'ours',
     method_b: 'e2a',
     result_a: 'https://vhdyfdmtiglimbtuvtvg.supabase.co/storage/v1/object/public/scenes/sceneharness_099_translate.glb',
     result_b: 'https://vhdyfdmtiglimbtuvtvg.supabase.co/storage/v1/object/public/scenes/E2A_099_translate.glb',
   },
-
   {
     question_id: 'q013',
     scene_id: '203',
     instruction: 'Move the four yoga mats together to form a rectangle.',
+    instruction_zh: '将四个瑜伽垫移动到一起，使它们组成一个矩形。',
     original: 'https://vhdyfdmtiglimbtuvtvg.supabase.co/storage/v1/object/public/scenes/203_origin.glb',
     method_a: 'ours',
     method_b: 'blender_mcp',
     result_a: 'https://vhdyfdmtiglimbtuvtvg.supabase.co/storage/v1/object/public/scenes/sceneharness_203_translate.glb',
     result_b: 'https://vhdyfdmtiglimbtuvtvg.supabase.co/storage/v1/object/public/scenes/BlenderMCP_203_translate.glb',
   },
-
   {
     question_id: 'q014',
     scene_id: '207',
     instruction: 'Please move the table in the room with the most chairs closer to the whiteboard.',
+    instruction_zh: '请将椅子最多的房间中的桌子移动得更靠近白板。',
     original: 'https://vhdyfdmtiglimbtuvtvg.supabase.co/storage/v1/object/public/scenes/207_origin.glb',
     method_a: 'ours',
     method_b: 'layoutvlm',
     result_a: 'https://vhdyfdmtiglimbtuvtvg.supabase.co/storage/v1/object/public/scenes/sceneharness_207_translate.glb',
     result_b: 'https://vhdyfdmtiglimbtuvtvg.supabase.co/storage/v1/object/public/scenes/LayoutVLM_207_translate.glb',
   },
-
   {
     question_id: 'q015',
     scene_id: '099',
     instruction: 'Add a floor lamp next to the bed in the bedroom, replace the two mirrors in the bathroom with one large mirror, and hang a Mona Lisa painting on the wall in the living room.',
+    instruction_zh: '在卧室床边添加一盏落地灯，将浴室中的两面镜子替换为一面大镜子，并在客厅墙上挂一幅蒙娜丽莎画作。',
     original: 'https://vhdyfdmtiglimbtuvtvg.supabase.co/storage/v1/object/public/scenes/099_origin.glb',
     method_a: 'ours',
     method_b: 'e2a',
     result_a: 'https://vhdyfdmtiglimbtuvtvg.supabase.co/storage/v1/object/public/scenes/sceneharness_099_mixed.glb',
     result_b: 'https://vhdyfdmtiglimbtuvtvg.supabase.co/storage/v1/object/public/scenes/E2A_099_mixed.glb',
   },
-
   {
     question_id: 'q016',
     scene_id: '200',
     instruction: 'Rotate the three sculptures 90 degrees around their collective center.',
+    instruction_zh: '将三座雕塑围绕它们的整体中心旋转 90 度。',
     original: 'https://vhdyfdmtiglimbtuvtvg.supabase.co/storage/v1/object/public/scenes/200_origin.glb',
     method_a: 'ours',
     method_b: 'e2a',
     result_a: 'https://vhdyfdmtiglimbtuvtvg.supabase.co/storage/v1/object/public/scenes/sceneharness_200_rotate.glb',
     result_b: 'https://vhdyfdmtiglimbtuvtvg.supabase.co/storage/v1/object/public/scenes/E2A_200_rotate.glb',
   },
-
   {
     question_id: 'q017',
     scene_id: '099',
     instruction: 'Move the plants from the living room to the bedroom nightstand.',
+    instruction_zh: '将植物从客厅移动到卧室的床头柜上。',
     original: 'https://vhdyfdmtiglimbtuvtvg.supabase.co/storage/v1/object/public/scenes/099_origin.glb',
     method_a: 'ours',
     method_b: 'layoutvlm',
     result_a: 'https://vhdyfdmtiglimbtuvtvg.supabase.co/storage/v1/object/public/scenes/sceneharness_099_translate.glb',
     result_b: 'https://vhdyfdmtiglimbtuvtvg.supabase.co/storage/v1/object/public/scenes/LayoutVLM_099_translate.glb',
   },
-
   {
     question_id: 'q018',
     scene_id: '207',
-    instruction: 'Rotate the server 90 degrees clockwise',
+    instruction: 'Rotate the server 90 degrees clockwise.',
+    instruction_zh: '将服务器顺时针旋转 90 度。',
     original: 'https://vhdyfdmtiglimbtuvtvg.supabase.co/storage/v1/object/public/scenes/207_origin.glb',
     method_a: 'ours',
     method_b: 'blender_mcp',
     result_a: 'https://vhdyfdmtiglimbtuvtvg.supabase.co/storage/v1/object/public/scenes/sceneharness_207_rotate.glb',
     result_b: 'https://vhdyfdmtiglimbtuvtvg.supabase.co/storage/v1/object/public/scenes/BlenderMCP_207_rotate.glb',
   },
-
   {
     question_id: 'q019',
     scene_id: '203',
     instruction: 'Move the four yoga mats together to form a rectangle.',
+    instruction_zh: '将四个瑜伽垫移动到一起，使它们组成一个矩形。',
     original: 'https://vhdyfdmtiglimbtuvtvg.supabase.co/storage/v1/object/public/scenes/203_origin.glb',
     method_a: 'ours',
     method_b: 'layoutvlm',
     result_a: 'https://vhdyfdmtiglimbtuvtvg.supabase.co/storage/v1/object/public/scenes/sceneharness_203_translate.glb',
     result_b: 'https://vhdyfdmtiglimbtuvtvg.supabase.co/storage/v1/object/public/scenes/LayoutVLM_203_translate.glb',
   },
-
   {
     question_id: 'q020',
     scene_id: '200',
     instruction: 'Make the paintings in the hallway smaller.',
+    instruction_zh: '将走廊中的画作缩小。',
     original: 'https://vhdyfdmtiglimbtuvtvg.supabase.co/storage/v1/object/public/scenes/200_origin.glb',
     method_a: 'ours',
     method_b: 'blender_mcp',
     result_a: 'https://vhdyfdmtiglimbtuvtvg.supabase.co/storage/v1/object/public/scenes/sceneharness_200_scale.glb',
     result_b: 'https://vhdyfdmtiglimbtuvtvg.supabase.co/storage/v1/object/public/scenes/BlenderMCP_200_scale.glb',
   },
-
   {
     question_id: 'q021',
     scene_id: '099',
     instruction: 'Add a floor lamp next to the bed in the bedroom, replace the two mirrors in the bathroom with one large mirror, and hang a Mona Lisa painting on the wall in the living room.',
+    instruction_zh: '在卧室床边添加一盏落地灯，将浴室中的两面镜子替换为一面大镜子，并在客厅墙上挂一幅蒙娜丽莎画作。',
     original: 'https://vhdyfdmtiglimbtuvtvg.supabase.co/storage/v1/object/public/scenes/099_origin.glb',
     method_a: 'ours',
     method_b: 'blender_mcp',
     result_a: 'https://vhdyfdmtiglimbtuvtvg.supabase.co/storage/v1/object/public/scenes/sceneharness_099_mixed.glb',
     result_b: 'https://vhdyfdmtiglimbtuvtvg.supabase.co/storage/v1/object/public/scenes/BlenderMCP_099_mixed.glb',
   },
-
   {
     question_id: 'q022',
     scene_id: '199',
     instruction: 'Rotate the toilet supply cabinet 90 degrees clockwise.',
+    instruction_zh: '将厕所用品柜顺时针旋转 90 度。',
     original: 'https://vhdyfdmtiglimbtuvtvg.supabase.co/storage/v1/object/public/scenes/199_origin.glb',
     method_a: 'ours',
     method_b: 'layoutvlm',
     result_a: 'https://vhdyfdmtiglimbtuvtvg.supabase.co/storage/v1/object/public/scenes/sceneharness_199_rotate.glb',
     result_b: 'https://vhdyfdmtiglimbtuvtvg.supabase.co/storage/v1/object/public/scenes/LayoutVLM_199_rotate.glb',
   },
-
   {
     question_id: 'q023',
     scene_id: '203',
     instruction: 'Enlarge all the chairs in the scene.',
+    instruction_zh: '放大场景中的所有椅子。',
     original: 'https://vhdyfdmtiglimbtuvtvg.supabase.co/storage/v1/object/public/scenes/203_origin.glb',
     method_a: 'ours',
     method_b: 'e2a',
     result_a: 'https://vhdyfdmtiglimbtuvtvg.supabase.co/storage/v1/object/public/scenes/sceneharness_203_scale.glb',
     result_b: 'https://vhdyfdmtiglimbtuvtvg.supabase.co/storage/v1/object/public/scenes/E2A_203_scale.glb',
   },
-
   {
     question_id: 'q024',
     scene_id: '200',
     instruction: 'Rotate the three sculptures 90 degrees around their collective center.',
+    instruction_zh: '将三座雕塑围绕它们的整体中心旋转 90 度。',
     original: 'https://vhdyfdmtiglimbtuvtvg.supabase.co/storage/v1/object/public/scenes/200_origin.glb',
     method_a: 'ours',
     method_b: 'layoutvlm',
     result_a: 'https://vhdyfdmtiglimbtuvtvg.supabase.co/storage/v1/object/public/scenes/sceneharness_200_rotate.glb',
     result_b: 'https://vhdyfdmtiglimbtuvtvg.supabase.co/storage/v1/object/public/scenes/LayoutVLM_200_rotate.glb',
   },
-
   {
     question_id: 'q025',
     scene_id: '207',
     instruction: 'Please move the table in the room with the most chairs closer to the whiteboard.',
+    instruction_zh: '请将椅子最多的房间中的桌子移动得更靠近白板。',
     original: 'https://vhdyfdmtiglimbtuvtvg.supabase.co/storage/v1/object/public/scenes/207_origin.glb',
     method_a: 'ours',
     method_b: 'e2a',
@@ -359,7 +360,7 @@ function makeParticipantId() {
   return newId
 }
 
-function QuestionPage() {
+function QuestionPage({lang = 'en'}) {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [answers, setAnswers] = useState({})
   const [reviewMode, setReviewMode] = useState(false)
@@ -585,7 +586,7 @@ function QuestionPage() {
           <div className="instruction-panel">
             <h2>Editing Instruction</h2>
             <p className="instruction-text">
-              {question.instruction}
+              {lang === 'zh' ? question.instruction_zh : question.instruction}
             </p>
           </div>
 

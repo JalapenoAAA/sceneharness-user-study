@@ -5,11 +5,16 @@ import './App.css'
 
 function App() {
   const [started, setStarted] = useState(false)
+  const [lang, setLang] = useState('en')
 
   return started ? (
-    <QuestionPage />
+    <QuestionPage lang={lang} setLang={setLang} />
   ) : (
-    <IntroPage onStart={() => setStarted(true)} />
+    <IntroPage
+      lang={lang}
+      setLang={setLang}
+      onStart={() => setStarted(true)}
+    />
   )
 }
 
