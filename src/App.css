@@ -1,0 +1,382 @@
+#root {
+  width: 100%;
+}
+
+body {
+  margin: 0;
+  background: #f4f6f8;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #1f2933;
+}
+
+.page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 48px 24px;
+  box-sizing: border-box;
+}
+
+.intro-card {
+  max-width: 960px;
+  width: 100%;
+  background: white;
+  border-radius: 18px;
+  padding: 48px 56px;
+  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.12);
+  text-align: center;
+}
+
+.intro-card h1 {
+  margin: 0 0 32px;
+  font-size: 34px;
+  line-height: 1.25;
+  color: #111827;
+}
+
+.intro-card p {
+  margin: 0 auto 20px;
+  max-width: 820px;
+  font-size: 17px;
+  line-height: 1.75;
+  text-align: justify;
+}
+
+.primary-button {
+  margin-top: 28px;
+  padding: 14px 34px;
+  border: none;
+  border-radius: 999px;
+  background: #111827;
+  color: white;
+  font-size: 17px;
+  cursor: pointer;
+}
+
+.primary-button:hover {
+  background: #374151;
+}
+
+.consent-text {
+  margin-top: 28px !important;
+  font-size: 15px !important;
+  color: #4b5563;
+  text-align: center !important;
+}
+
+.form-page {
+  min-height: 100vh;
+  padding: 36px 20px 64px;
+  background: #f4f6f8;
+  box-sizing: border-box;
+}
+
+.form-header-card,
+.form-item-card {
+  max-width: 1100px;
+  margin: 0 auto 22px;
+  background: white;
+  border-radius: 14px;
+  padding: 28px 34px;
+  box-shadow: 0 4px 18px rgba(15, 23, 42, 0.08);
+  box-sizing: border-box;
+}
+
+.form-header-card {
+  border-top: 10px solid #111827;
+  text-align: center;
+}
+
+.form-header-card h1 {
+  margin: 0 0 10px;
+  font-size: 30px;
+  line-height: 1.3;
+}
+
+.form-header-card p {
+  margin: 0;
+  color: #6b7280;
+}
+
+.form-item-card h2 {
+  margin: 0 0 18px;
+  font-size: 22px;
+  color: #111827;
+}
+
+.instruction-text {
+  font-size: 20px;
+  line-height: 1.6;
+  margin: 0;
+  background: #f9fafb;
+  padding: 18px 22px;
+  border-radius: 10px;
+}
+
+.viewer-item {
+  margin-top: 10px;
+}
+
+.viewer-item h3 {
+  text-align: center;
+  margin: 0 0 12px;
+  font-size: 18px;
+}
+
+.viewer-hint {
+  text-align: center;
+  margin: 8px 0 0;
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.results-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.option-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.option-button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 20px;
+  border: 1px solid #d1d5db;
+  border-radius: 12px;
+  background: white;
+  color: #111827;
+  font-size: 17px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.option-button:hover {
+  border-color: #111827;
+  background: #f9fafb;
+}
+
+.option-circle {
+  width: 18px;
+  height: 18px;
+  border: 2px solid #6b7280;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+@media (max-width: 900px) {
+  .results-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .form-header-card,
+  .form-item-card {
+    padding: 24px 20px;
+  }
+}
+
+.top-grid {
+  display: grid;
+  grid-template-columns: 0.8fr 1.2fr;
+  gap: 28px;
+  align-items: stretch;
+}
+
+.instruction-panel,
+.origin-panel {
+  min-width: 0;
+}
+
+.viewer-controls {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.viewer-controls button {
+  padding: 8px 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 999px;
+  background: white;
+  color: #111827;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.viewer-controls button:hover {
+  border-color: #111827;
+  background: #f9fafb;
+}
+
+@media (max-width: 900px) {
+  .top-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.option-button.selected {
+  border-color: #111827;
+  background: #eef2ff;
+}
+
+.option-button.selected .option-circle {
+  border-color: #111827;
+  background: #111827;
+  box-shadow: inset 0 0 0 4px white;
+}
+
+.next-button,
+.submit-button {
+  margin-top: 24px;
+  padding: 14px 30px;
+  border: none;
+  border-radius: 999px;
+  background: #111827;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.next-button:hover,
+.submit-button:hover {
+  background: #374151;
+}
+
+.submit-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.review-list {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.review-item {
+  padding: 18px 20px;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background: #f9fafb;
+}
+
+.review-item p {
+  margin: 8px 0 0;
+}
+
+.navigation-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.secondary-button,
+.edit-button {
+  padding: 12px 24px;
+  border: 1px solid #d1d5db;
+  border-radius: 999px;
+  background: white;
+  color: #111827;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.secondary-button:hover,
+.edit-button:hover {
+  border-color: #111827;
+  background: #f9fafb;
+}
+
+.secondary-button:disabled,
+.next-button:disabled,
+.submit-button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.edit-button {
+  margin-top: 12px;
+  padding: 8px 18px;
+  font-size: 14px;
+}
+
+.loading-text {
+  margin-bottom: 16px;
+  color: #b45309;
+  font-size: 15px;
+  text-align: center;
+}
+
+.viewer-wrapper {
+  position: relative;
+}
+
+.option-button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* Tablet / small laptop */
+@media (max-width: 900px) {
+  .intro-card {
+    padding: 32px 24px;
+  }
+  .intro-card h1 {
+    font-size: 26px;
+  }
+  .form-item-card {
+    padding: 20px 16px;
+  }
+}
+
+/* Phone */
+@media (max-width: 640px) {
+  .intro-card {
+    padding: 24px 16px;
+  }
+  .intro-card h1 {
+    font-size: 22px;
+  }
+  .intro-card p {
+    font-size: 15px;
+  }
+  .form-header-card h1 {
+    font-size: 22px;
+  }
+  .form-item-card h2 {
+    font-size: 18px;
+  }
+  .instruction-text {
+    font-size: 16px;
+    padding: 14px 16px;
+  }
+  .option-button {
+    padding: 14px 16px;
+    font-size: 15px;
+  }
+  .viewer-item h3 {
+    font-size: 16px;
+  }
+}
+
+/* Small phone */
+@media (max-width: 400px) {
+  .intro-card h1 {
+    font-size: 20px;
+  }
+  .form-header-card h1 {
+    font-size: 20px;
+  }
+  .viewer-item model-viewer {
+    height: 260px !important;
+  }
+}
