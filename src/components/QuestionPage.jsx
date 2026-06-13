@@ -78,7 +78,7 @@ const questions = [
     question_id: 'q007',
     scene_id: 'bathroom',
     instruction: 'Scale the round illuminated wall mirror to 1.5 times its current size.',
-    instruction_zh: '将圆形发光壁镜放大到当前尺寸的 1.5 倍。',
+    instruction_zh: '将镜子放大到当前尺寸的 1.5 倍。',
     original: 'https://vhdyfdmtiglimbtuvtvg.supabase.co/storage/v1/object/public/scenes/bathroom_origin.glb',
     method_a: 'ours',
     method_b: 'vulcan',
