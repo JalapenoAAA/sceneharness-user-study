@@ -285,11 +285,17 @@ const questions = [
   },
 ]
 
-function SceneViewer({ title, src, onLoaded }) {
+function SceneViewer({ title, src, onLoaded, loadKey }) {
   const viewerRef = useRef(null)
   const onLoadedRef = useRef(onLoaded)
   onLoadedRef.current = onLoaded
 
+  // Re-evaluate "is this viewer loaded?" whenever the parent advances to a new
+  // question (loadKey changes), even if `src` is the same as the previous question.
+  // q006/q017/q019/q024 reuse the same `original` URL as a previous question, so
+  // React keeps the model-viewer DOM node and model-viewer never re-fires `load`.
+  // Without depending on loadKey, this effect would never re-run and the
+  // "Loading..." banner would stay stuck forever.
   useEffect(() => {
     const viewer = viewerRef.current
     if (!viewer) return
@@ -302,10 +308,9 @@ function SceneViewer({ title, src, onLoaded }) {
       onLoadedRef.current()
     }
 
-    // If the viewer already finished loading (e.g. q006/q017/q019/q024 reuse the same
-    // src as a previous question, so React keeps the DOM node and model-viewer never
-    // re-fires `load`), mark done immediately — otherwise the "Loading..." banner
-    // gets stuck forever.
+    // src is unchanged from the previous question and model-viewer already
+    // finished loading it — fire onLoaded immediately so the parent flips
+    // loadedViewers[...] back to true.
     if (viewer.loaded) {
       markDone()
       return () => {}
@@ -330,13 +335,23 @@ function SceneViewer({ title, src, onLoaded }) {
       clearTimeout(timer)
       viewer.removeEventListener('load', handleLoad)
       viewer.removeEventListener('progress', handleProgress)
-      // Trigger model-viewer-base.js:354 reset branch:
-      //   ModelScene.reset() drops the gltf reference,
-      //   CachingGLTFLoader evicts the entry,
-      //   three.js disposes textures/buffers — actually freeing GPU memory.
+    }
+  }, [src, loadKey])
+
+  // Separate effect that ONLY runs on real unmount — releases GPU memory by
+  // triggering model-viewer-base.js:354 reset branch:
+  //   ModelScene.reset() drops the gltf reference,
+  //   CachingGLTFLoader evicts the entry,
+  //   three.js disposes textures/buffers — actually freeing GPU memory.
+  // Kept separate from the [src, loadKey] effect so we don't accidentally
+  // null-out the src during a normal src change (which would cancel the new load).
+  useEffect(() => {
+    return () => {
+      const viewer = viewerRef.current
+      if (!viewer) return
       try { viewer.src = null } catch (e) { /* viewer may already be detached */ }
     }
-  }, [src])
+  }, [])
 
   return (
     <div className="viewer-item">
@@ -609,6 +624,7 @@ function QuestionPage({lang = 'en'}) {
             <SceneViewer
               title="Original Scene"
               src={question.original}
+              loadKey={viewerLoadKey}
               onLoaded={() => markViewerLoaded(`${viewerLoadKey}_original`)}
             />
           </div>
@@ -622,12 +638,14 @@ function QuestionPage({lang = 'en'}) {
           <SceneViewer
             title="Result A"
             src={question.leftSrc}
+            loadKey={viewerLoadKey}
             onLoaded={() => markViewerLoaded(`${viewerLoadKey}_left`)}
           />
 
           <SceneViewer
             title="Result B"
             src={question.rightSrc}
+            loadKey={viewerLoadKey}
             onLoaded={() => markViewerLoaded(`${viewerLoadKey}_right`)}
           />
         </div>
