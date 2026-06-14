@@ -6,6 +6,8 @@ import { supabase } from '../supabaseClient'
 ModelViewerElement.minimumRenderScale = 0.1
 // Cache covers "current question + previous question" so prev/edit doesn't re-download and double the peak
 ModelViewerElement.modelCacheSize = 0
+// Enable meshopt decoder so GLBs compressed with `gltfpack -cc` (EXT_meshopt_compression) can load
+ModelViewerElement.meshoptDecoderLocation = 'https://cdn.jsdelivr.net/npm/meshoptimizer@0.20.0/meshopt_decoder.js'
 
 const questions = [
   {
@@ -214,7 +216,7 @@ function SceneViewer({ title, src }) {
           src={effectiveSrc}
           camera-controls
           interaction-prompt="none"
-          loading="lazy"
+          loading="eager"
           reveal="auto"
           style={{
             width: '100%',
