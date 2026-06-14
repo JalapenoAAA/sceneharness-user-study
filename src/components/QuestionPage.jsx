@@ -2,10 +2,10 @@ import { useState, useMemo, useEffect, useRef } from 'react'
 import { ModelViewerElement } from '@google/model-viewer'
 import { supabase } from '../supabaseClient'
 
-// Reduce WebGL framebuffer resolution (lower GPU memory ~75% on Retina)
-ModelViewerElement.minimumRenderScale = 0.5
-// Only cache 3 models (current question), evict old ones automatically
-ModelViewerElement.modelCacheSize = 3
+// Reduce WebGL framebuffer resolution (lower GPU memory; 0.35 is barely visible on static furniture scenes)
+ModelViewerElement.minimumRenderScale = 0.35
+// Cache covers "current question + previous question" so prev/edit doesn't re-download and double the peak
+ModelViewerElement.modelCacheSize = 6
 
 const questions = [
   {
@@ -302,6 +302,15 @@ function SceneViewer({ title, src, onLoaded }) {
       onLoadedRef.current()
     }
 
+    // If the viewer already finished loading (e.g. q006/q017/q019/q024 reuse the same
+    // src as a previous question, so React keeps the DOM node and model-viewer never
+    // re-fires `load`), mark done immediately — otherwise the "Loading..." banner
+    // gets stuck forever.
+    if (viewer.loaded) {
+      markDone()
+      return () => {}
+    }
+
     const handleLoad = () => markDone()
 
     const handleProgress = (event) => {
@@ -321,6 +330,11 @@ function SceneViewer({ title, src, onLoaded }) {
       clearTimeout(timer)
       viewer.removeEventListener('load', handleLoad)
       viewer.removeEventListener('progress', handleProgress)
+      // Trigger model-viewer-base.js:354 reset branch:
+      //   ModelScene.reset() drops the gltf reference,
+      //   CachingGLTFLoader evicts the entry,
+      //   three.js disposes textures/buffers — actually freeing GPU memory.
+      try { viewer.src = null } catch (e) { /* viewer may already be detached */ }
     }
   }, [src])
 
