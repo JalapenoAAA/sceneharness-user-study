@@ -285,66 +285,11 @@ const questions = [
   },
 ]
 
-function SceneViewer({ title, src, onLoaded, loadKey }) {
+function SceneViewer({ title, src }) {
   const viewerRef = useRef(null)
-  const onLoadedRef = useRef(onLoaded)
-  onLoadedRef.current = onLoaded
 
-  // Re-evaluate "is this viewer loaded?" whenever the parent advances to a new
-  // question (loadKey changes), even if `src` is the same as the previous question.
-  // q006/q017/q019/q024 reuse the same `original` URL as a previous question, so
-  // React keeps the model-viewer DOM node and model-viewer never re-fires `load`.
-  // Without depending on loadKey, this effect would never re-run and the
-  // "Loading..." banner would stay stuck forever.
-  useEffect(() => {
-    const viewer = viewerRef.current
-    if (!viewer) return
-
-    let done = false
-
-    const markDone = () => {
-      if (done) return
-      done = true
-      onLoadedRef.current()
-    }
-
-    // src is unchanged from the previous question and model-viewer already
-    // finished loading it — fire onLoaded immediately so the parent flips
-    // loadedViewers[...] back to true.
-    if (viewer.loaded) {
-      markDone()
-      return () => {}
-    }
-
-    const handleLoad = () => markDone()
-
-    const handleProgress = (event) => {
-      if (event.detail?.totalProgress >= 1) {
-        markDone()
-      }
-    }
-
-    viewer.addEventListener('load', handleLoad)
-    viewer.addEventListener('progress', handleProgress)
-
-    const timer = setTimeout(() => {
-      markDone()
-    }, 5000)
-
-    return () => {
-      clearTimeout(timer)
-      viewer.removeEventListener('load', handleLoad)
-      viewer.removeEventListener('progress', handleProgress)
-    }
-  }, [src, loadKey])
-
-  // Separate effect that ONLY runs on real unmount — releases GPU memory by
-  // triggering model-viewer-base.js:354 reset branch:
-  //   ModelScene.reset() drops the gltf reference,
-  //   CachingGLTFLoader evicts the entry,
-  //   three.js disposes textures/buffers — actually freeing GPU memory.
-  // Kept separate from the [src, loadKey] effect so we don't accidentally
-  // null-out the src during a normal src change (which would cancel the new load).
+  // Release GPU memory on real unmount only:
+  //   viewer.src = null → ModelScene.reset() → CachingGLTFLoader evict → three.js dispose
   useEffect(() => {
     return () => {
       const viewer = viewerRef.current
@@ -395,7 +340,6 @@ function QuestionPage({lang = 'en'}) {
   const [reviewMode, setReviewMode] = useState(false)
   const [finished, setFinished] = useState(false)
   const [submitting, setSubmitting] = useState(false)
-  const [loadedViewers, setLoadedViewers] = useState({})
 
   const participantId = useMemo(() => makeParticipantId(), [])
 
@@ -418,39 +362,11 @@ function QuestionPage({lang = 'en'}) {
   const answeredCount = Object.keys(answers).length
   const allAnswered = answeredCount === randomizedQuestions.length
 
-  const viewerLoadKey = question.question_id
-
-  const allViewersLoaded =
-    loadedViewers[`${viewerLoadKey}_original`] &&
-    loadedViewers[`${viewerLoadKey}_left`] &&
-    loadedViewers[`${viewerLoadKey}_right`]
-
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }, [currentIndex, reviewMode, finished])
 
-  useEffect(() => {
-    setLoadedViewers((prev) => ({
-      ...prev,
-      [`${viewerLoadKey}_original`]: false,
-      [`${viewerLoadKey}_left`]: false,
-      [`${viewerLoadKey}_right`]: false,
-    }))
-  }, [viewerLoadKey])
-
-  const markViewerLoaded = (key) => {
-    setLoadedViewers((prev) => ({
-      ...prev,
-      [key]: true,
-    }))
-  }
-
   const saveChoice = (choice) => {
-    if (!allViewersLoaded && !currentAnswer) {
-      alert('Please wait until all 3D scenes are fully loaded.')
-      return
-    }
-
     const winnerMethod =
       choice === 'left'
         ? question.leftMethod
@@ -624,8 +540,6 @@ function QuestionPage({lang = 'en'}) {
             <SceneViewer
               title="Original Scene"
               src={question.original}
-              loadKey={viewerLoadKey}
-              onLoaded={() => markViewerLoaded(`${viewerLoadKey}_original`)}
             />
           </div>
         </div>
@@ -638,15 +552,11 @@ function QuestionPage({lang = 'en'}) {
           <SceneViewer
             title="Result A"
             src={question.leftSrc}
-            loadKey={viewerLoadKey}
-            onLoaded={() => markViewerLoaded(`${viewerLoadKey}_left`)}
           />
 
           <SceneViewer
             title="Result B"
             src={question.rightSrc}
-            loadKey={viewerLoadKey}
-            onLoaded={() => markViewerLoaded(`${viewerLoadKey}_right`)}
           />
         </div>
       </section>
@@ -654,17 +564,10 @@ function QuestionPage({lang = 'en'}) {
       <section className="form-item-card">
         <h2>Which result do you prefer?</h2>
 
-        {!allViewersLoaded && (
-          <p className="loading-text">
-            Loading 3D scenes... Please wait before making your choice.
-          </p>
-        )}
-
         <div className="option-list">
           <button
             className={`option-button ${currentAnswer?.choice === 'left' ? 'selected' : ''}`}
             onClick={() => saveChoice('left')}
-            disabled={!allViewersLoaded && !currentAnswer}
           >
             <span className="option-circle" />
             <span>Result A is better</span>
@@ -673,7 +576,6 @@ function QuestionPage({lang = 'en'}) {
           <button
             className={`option-button ${currentAnswer?.choice === 'right' ? 'selected' : ''}`}
             onClick={() => saveChoice('right')}
-            disabled={!allViewersLoaded && !currentAnswer}
           >
             <span className="option-circle" />
             <span>Result B is better</span>
