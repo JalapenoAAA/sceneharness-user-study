@@ -3,7 +3,7 @@ import { ModelViewerElement } from '@google/model-viewer'
 import { supabase } from '../supabaseClient'
 
 // Reduce WebGL framebuffer resolution (lower GPU memory; 0.35 is barely visible on static furniture scenes)
-ModelViewerElement.minimumRenderScale = 0.35
+ModelViewerElement.minimumRenderScale = 0.1
 // Cache covers "current question + previous question" so prev/edit doesn't re-download and double the peak
 ModelViewerElement.modelCacheSize = 6
 
@@ -308,7 +308,7 @@ function SceneViewer({ title, src }) {
         src={src}
         camera-controls
         interaction-prompt="none"
-        loading="eager"
+        loading="lazy"
         reveal="auto"
         style={{
           width: '100%',
