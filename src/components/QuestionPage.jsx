@@ -287,6 +287,18 @@ const questions = [
 
 function SceneViewer({ title, src }) {
   const viewerRef = useRef(null)
+  const [errored, setErrored] = useState(false)
+  const [reloadKey, setReloadKey] = useState(0)
+
+  // Listen for model-viewer's `error` event so we can show a retry button.
+  useEffect(() => {
+    setErrored(false)
+    const viewer = viewerRef.current
+    if (!viewer) return
+    const handleError = () => setErrored(true)
+    viewer.addEventListener('error', handleError)
+    return () => viewer.removeEventListener('error', handleError)
+  }, [src, reloadKey])
 
   // Release GPU memory on real unmount only:
   //   viewer.src = null → ModelScene.reset() → CachingGLTFLoader evict → three.js dispose
@@ -298,25 +310,42 @@ function SceneViewer({ title, src }) {
     }
   }, [])
 
+  // Append a cache-busting query param on retry so the browser actually re-fetches.
+  const effectiveSrc = reloadKey > 0 ? `${src}${src.includes('?') ? '&' : '?'}_r=${reloadKey}` : src
+
   return (
     <div className="viewer-item">
       <h3>{title}</h3>
 
-      <model-viewer
-        ref={viewerRef}
-        key={src}
-        src={src}
-        camera-controls
-        interaction-prompt="none"
-        loading="lazy"
-        reveal="auto"
-        style={{
-          width: '100%',
-          height: '360px',
-          backgroundColor: '#f5f5f5',
-          borderRadius: '12px'
-        }}
-      ></model-viewer>
+      <div className="viewer-wrapper">
+        <model-viewer
+          ref={viewerRef}
+          key={`${src}-${reloadKey}`}
+          src={effectiveSrc}
+          camera-controls
+          interaction-prompt="none"
+          loading="lazy"
+          reveal="auto"
+          style={{
+            width: '100%',
+            height: '360px',
+            backgroundColor: '#f5f5f5',
+            borderRadius: '12px'
+          }}
+        ></model-viewer>
+
+        {errored && (
+          <div className="viewer-error-overlay">
+            <p>Failed to load scene.</p>
+            <button
+              className="primary-button"
+              onClick={() => setReloadKey((k) => k + 1)}
+            >
+              🔄 Reload
+            </button>
+          </div>
+        )}
+      </div>
 
       <p className="viewer-hint">
         Drag to rotate the scene. Hold Shift and drag to pan the view. Use the mouse wheel to zoom in or out.

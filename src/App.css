@@ -320,6 +320,30 @@ body {
   position: relative;
 }
 
+.viewer-error-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  background: rgba(245, 245, 245, 0.95);
+  border-radius: 12px;
+  color: #b91c1c;
+  font-size: 16px;
+  text-align: center;
+}
+
+.viewer-error-overlay p {
+  margin: 0;
+}
+
+.viewer-error-overlay button {
+  padding: 10px 24px;
+  font-size: 15px;
+}
+
 .option-button:disabled {
   opacity: 0.45;
   cursor: not-allowed;
