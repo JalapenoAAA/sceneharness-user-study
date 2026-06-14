@@ -111,7 +111,7 @@ const questions = [
     question_id: 'q010',
     scene_id: '200',
     instruction: 'Rotate the three sculptures 90 degrees around their collective center.',
-    instruction_zh: '将三座雕塑围绕它们的整体中心旋转 90 度。',
+    instruction_zh: '将三座雕塑视为一个整体，在不改变它们彼此位置关系的情况下，整体旋转 90 度。',
     original: 'https://vhdyfdmtiglimbtuvtvg.supabase.co/storage/v1/object/public/scenes/200_origin.glb',
     method_a: 'ours',
     method_b: 'e2a',
