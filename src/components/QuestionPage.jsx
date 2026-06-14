@@ -5,7 +5,7 @@ import { supabase } from '../supabaseClient'
 // Reduce WebGL framebuffer resolution (lower GPU memory; 0.35 is barely visible on static furniture scenes)
 ModelViewerElement.minimumRenderScale = 0.1
 // Cache covers "current question + previous question" so prev/edit doesn't re-download and double the peak
-ModelViewerElement.modelCacheSize = 6
+ModelViewerElement.modelCacheSize = 0
 
 const questions = [
   {
