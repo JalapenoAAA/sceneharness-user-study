@@ -1,9 +1,11 @@
-import { useState, useMemo, useEffect, useRef } from 'react'
+import { useState, useMemo, useEffect, useRef, useCallback } from 'react'
 import { ModelViewerElement } from '@google/model-viewer'
 import { supabase } from '../supabaseClient'
 
+const isWindows = /Windows/i.test(navigator.userAgent)
+
 // Reduce WebGL framebuffer resolution (lower GPU memory; 0.35 is barely visible on static furniture scenes)
-ModelViewerElement.minimumRenderScale = 0.1
+ModelViewerElement.minimumRenderScale = isWindows ? 0.5 : 0.1
 // Cache covers "current question + previous question" so prev/edit doesn't re-download and double the peak
 ModelViewerElement.modelCacheSize = 0
 // Enable meshopt decoder so GLBs compressed with `gltfpack -cc` (EXT_meshopt_compression) can load
@@ -255,18 +257,37 @@ function makeParticipantId() {
   return newId
 }
 
+const SURVEY_STORAGE_KEY = 'survey_state'
+
+function saveSurveyState(state) {
+  localStorage.setItem(SURVEY_STORAGE_KEY, JSON.stringify(state))
+}
+
+function loadSurveyState() {
+  try {
+    const raw = localStorage.getItem(SURVEY_STORAGE_KEY)
+    return raw ? JSON.parse(raw) : null
+  } catch { return null }
+}
+
+function clearSurveyState() {
+  localStorage.removeItem(SURVEY_STORAGE_KEY)
+}
+
 function QuestionPage({lang = 'en'}) {
-  const [currentIndex, setCurrentIndex] = useState(0)
-  const [answers, setAnswers] = useState({})
-  const [reviewMode, setReviewMode] = useState(false)
-  const [finished, setFinished] = useState(false)
+  const saved = useMemo(() => loadSurveyState(), [])
+  const [currentIndex, setCurrentIndex] = useState(saved?.currentIndex ?? 0)
+  const [answers, setAnswers] = useState(saved?.answers ?? {})
+  const [reviewMode, setReviewMode] = useState(saved?.reviewMode ?? false)
+  const [finished, setFinished] = useState(saved?.finished ?? false)
   const [submitting, setSubmitting] = useState(false)
 
   const participantId = useMemo(() => makeParticipantId(), [])
 
   const randomizedQuestions = useMemo(() => {
-    return questions.map((q) => {
-      const swap = Math.random() < 0.5
+    const savedSwaps = saved?.swaps
+    return questions.map((q, i) => {
+      const swap = savedSwaps ? savedSwaps[i] : Math.random() < 0.5
 
       return {
         ...q,
@@ -311,9 +332,27 @@ function QuestionPage({lang = 'en'}) {
     }))
   }
 
+  const navigateTo = useCallback((index, review = false) => {
+    if (isWindows) {
+      const swaps = randomizedQuestions.map((q) => q.leftMethod === q.method_b)
+      saveSurveyState({
+        currentIndex: index,
+        answers,
+        reviewMode: review,
+        finished: false,
+        swaps,
+        participantId,
+      })
+      window.location.reload()
+    } else {
+      setCurrentIndex(index)
+      if (review !== undefined) setReviewMode(review)
+    }
+  }, [randomizedQuestions, answers, participantId])
+
   const goPrevious = () => {
     if (currentIndex > 0) {
-      setCurrentIndex(currentIndex - 1)
+      navigateTo(currentIndex - 1)
     }
   }
 
@@ -324,9 +363,9 @@ function QuestionPage({lang = 'en'}) {
     }
 
     if (currentIndex + 1 < randomizedQuestions.length) {
-      setCurrentIndex(currentIndex + 1)
+      navigateTo(currentIndex + 1)
     } else if (allAnswered) {
-      setReviewMode(true)
+      navigateTo(currentIndex, true)
     } else {
       alert('Please answer all questions before reviewing your responses.')
     }
@@ -338,12 +377,11 @@ function QuestionPage({lang = 'en'}) {
       return
     }
 
-    setReviewMode(true)
+    navigateTo(currentIndex, true)
   }
 
   const editQuestion = (index) => {
-    setCurrentIndex(index)
-    setReviewMode(false)
+    navigateTo(index, false)
   }
 
   const handleSubmitAll = async () => {
@@ -369,6 +407,7 @@ function QuestionPage({lang = 'en'}) {
 
     setSubmitting(false)
     setFinished(true)
+    clearSurveyState()
   }
 
   if (finished) {
