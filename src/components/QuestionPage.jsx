@@ -408,6 +408,7 @@ function QuestionPage({lang = 'en'}) {
     setSubmitting(false)
     setFinished(true)
     clearSurveyState()
+    localStorage.removeItem('survey_started')
   }
 
   if (finished) {
